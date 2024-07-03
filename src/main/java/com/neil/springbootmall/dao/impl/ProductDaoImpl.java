@@ -1,12 +1,17 @@
 package com.neil.springbootmall.dao.impl;
 
 import com.neil.springbootmall.dao.ProductDao;
+import com.neil.springbootmall.dto.ProductRequset;
 import com.neil.springbootmall.model.Product;
 import com.neil.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -32,5 +37,29 @@ public class ProductDaoImpl implements ProductDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Integer createProdect(ProductRequset productRequset) {
+        String sql = "INSERT INTO product(product_name, category, image_url, price, stock, description, created_date, last_modified_date) " +
+                "VALUES(:productName, :category, :imageUrl, :price, :stock, :description, :createDate, :lastModifiedDate)";
+
+        Date now = new Date();
+        Map<String, Object> map = new HashMap<>();
+        map.put("productName", productRequset.getProductName());
+        map.put("category", productRequset.getCategory().toString());
+        map.put("imageUrl", productRequset.getImageUrl());
+        map.put("price", productRequset.getPrice());
+        map.put("stock", productRequset.getStock());
+        map.put("description", productRequset.getDescription());
+        map.put("createDate", now);
+        map.put("lastModifiedDate", now);
+
+        // 儲存資料庫生成id
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
+
+        int productId = keyHolder.getKey().intValue();
+        return productId;
     }
 }
