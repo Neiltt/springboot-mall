@@ -3,7 +3,11 @@ package com.neil.springbootmall.service;
 import com.neil.springbootmall.dto.ProductRequset;
 import com.neil.springbootmall.model.Product;
 
+import java.util.List;
+
 public interface ProductService {
+
+    List<Product> getProducts();
     Product getProdectById(Integer productId);
 
     Integer createProdect(ProductRequset productRequset);
