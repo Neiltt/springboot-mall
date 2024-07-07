@@ -50,4 +50,11 @@ public class ProductController {
         Product updateProduct = productService.getProdectById(productId);
         return ResponseEntity.status(HttpStatus.OK).body(updateProduct);
     }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<?> delectProduct(@PathVariable Integer productId){
+        productService.deleteProductById(productId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
