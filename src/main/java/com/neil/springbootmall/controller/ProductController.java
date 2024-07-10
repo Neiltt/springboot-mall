@@ -1,6 +1,7 @@
 package com.neil.springbootmall.controller;
 
 import com.neil.springbootmall.constant.ProductCategory;
+import com.neil.springbootmall.dto.ProductQueryParams;
 import com.neil.springbootmall.dto.ProductRequset;
 import com.neil.springbootmall.model.Product;
 import com.neil.springbootmall.service.ProductService;
@@ -23,7 +24,11 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search
     ){
-        List<Product> productList = productService.getProducts(category, search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
@@ -68,4 +73,5 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }
