@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductDao {
 
+    Integer countProduct(ProductQueryParams productQueryParams);
+
     List<Product> getProducts(ProductQueryParams productQueryParams);
     Product getProdectById(Integer productId);
 
@@ -16,4 +18,5 @@ public interface ProductDao {
     void updateProduct(Integer productId, ProductRequset productRequset);
 
     void deleteProductById(Integer productId);
+
 }
