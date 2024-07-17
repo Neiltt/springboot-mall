@@ -2,7 +2,7 @@ package com.neil.springbootmall.controller;
 
 import com.neil.springbootmall.constant.ProductCategory;
 import com.neil.springbootmall.dto.ProductQueryParams;
-import com.neil.springbootmall.dto.ProductRequset;
+import com.neil.springbootmall.dto.ProductRequest;
 import com.neil.springbootmall.model.Product;
 import com.neil.springbootmall.service.ProductService;
 import com.neil.springbootmall.util.Page;
@@ -71,7 +71,7 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequset productRequset){
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequset){
         Integer productId = productService.createProdect(productRequset);
 
         Product product = productService.getProdectById(productId);
@@ -81,7 +81,7 @@ public class ProductController {
 
     @PutMapping("/products/{productId}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productId,
-                                                 @RequestBody @Valid ProductRequset productRequset){
+                                                 @RequestBody @Valid ProductRequest productRequset){
         // 檢查product存在
         Product product = productService.getProdectById(productId);
         if(product == null){

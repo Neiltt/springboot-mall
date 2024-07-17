@@ -2,7 +2,7 @@ package com.neil.springbootmall.dao.impl;
 
 import com.neil.springbootmall.dao.ProductDao;
 import com.neil.springbootmall.dto.ProductQueryParams;
-import com.neil.springbootmall.dto.ProductRequset;
+import com.neil.springbootmall.dto.ProductRequest;
 import com.neil.springbootmall.model.Product;
 import com.neil.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +76,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Integer createProdect(ProductRequset productRequset) {
+    public Integer createProdect(ProductRequest productRequset) {
         String sql = "INSERT INTO product(product_name, category, image_url, price, stock, description, created_date, last_modified_date) " +
                 "VALUES(:productName, :category, :imageUrl, :price, :stock, :description, :createDate, :lastModifiedDate)";
 
@@ -100,7 +100,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void updateProduct(Integer productId, ProductRequset productRequset) {
+    public void updateProduct(Integer productId, ProductRequest productRequset) {
         String sql = "UPDATE product SET product_name= :productName, category= :category, image_url= :imageUrl, price= :price, stock= :stock, description= :description, last_modified_date= :lastModifiedDate" +
                 " WHERE product_id= :productId ";
 
