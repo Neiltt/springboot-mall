@@ -47,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
         sql = addFiteringSql(sql, map, productQueryParams);
 
         // 排序
-        sql = sql + " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
+        sql = sql + " OrderItem BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
 
         // 分頁
         sql = sql + " LIMIT :limit  OFFSET :offset ";
