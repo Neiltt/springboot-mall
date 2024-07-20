@@ -1,6 +1,7 @@
 package com.neil.springbootmall.service.impl;
 
 import com.neil.springbootmall.dao.UserDao;
+import com.neil.springbootmall.dto.UserLoginRequest;
 import com.neil.springbootmall.dto.UserRegisterRequest;
 import com.neil.springbootmall.model.User;
 import com.neil.springbootmall.service.UserService;
@@ -20,6 +21,22 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+        if(user == null){
+            log.warn("該 email {} 尚未註冊", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        if(user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        } else {
+            log.warn("該 email {} 密碼不正確", userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
     }
@@ -33,7 +50,6 @@ public class UserServiceImpl implements UserService {
             log.warn("該 email {} 已經被註冊", userRegisterRequest.getEmail());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
         // 創建帳號
         return userDao.createUser(userRegisterRequest);
     }
